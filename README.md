@@ -26,6 +26,7 @@ npm install
 ```
 
 - Instalação do Sequelize
+
 Para utilizar o Sequelize em seu projeto, instale o pacote npm `sequelize` e o driver MySQL `mysql2`:
 
 ```bash
@@ -35,7 +36,7 @@ npm install sequelize mysql2
 2. **Configuração do Banco de Dados**
 
 - Crie um banco de dados MySQL.
-- Configure as credenciais de acesso ao banco de dados no arquivo src/config/config.json.
+- Configure as credenciais de acesso ao banco de dados no arquivo src/database/config/config.json.
 
 3. **Execução das Migrations**
 
