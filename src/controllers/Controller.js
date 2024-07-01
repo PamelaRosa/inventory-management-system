@@ -6,6 +6,9 @@ class Controller {
   async getAll(req, res) {
     try {
       const registerList = await this.entityService.getAllRegisters();
+      if (!registerList || registerList.length === 0) {
+        return res.status(404).json({ message: 'Nenhum registro encontrado.' });
+      }
       return res.status(200).json(registerList);
     } catch (error) {
       return res.status(500).json(error.message);
@@ -17,6 +20,9 @@ class Controller {
     const { id } = req.params;
     try {
       const register = await this.entityService.getRegister(Number(id));
+      if (!register) {
+        return res.status(404).json({ message: 'Registro não encontrado.' });
+      }
       return res.status(200).json(register);
     } catch (error) {
       return res.status(500).json(error.message);
@@ -29,7 +35,7 @@ class Controller {
 
     try {
       const newRegister = await this.entityService.createRegister(newData);
-      return res.status(200).json(newRegister);
+      return res.status(201).json(newRegister);
     } catch (error) {
       return res.status(500).json(error.message);
     }
@@ -43,7 +49,7 @@ class Controller {
     try {
       const isUpdated = await this.entityService.updateRegister(updatedData, Number(id));
       if(!isUpdated) {
-        return res.status(400).json({ message: 'Registro não foi atualizado'});
+        return res.status(404).json({ message: 'Registro não encontrado ou não foi atualizado.'});
       }
       return res.status(200).json({ message: 'Atualizado com sucesso!' });
     } catch (error) {
@@ -56,7 +62,10 @@ class Controller {
     const { id } = req.params;
 
     try {
-      await this.entityService.deleteRegister(Number(id));
+      const deletedCount = await this.entityService.deleteRegister(Number(id));
+      if (deletedCount === 0) {
+        return res.status(404).json({ message: 'Registro não encontrado ou não foi deletado.' });
+      }
       return res.status(200).json({ mensagem: `id ${id} deletado` });
     } catch (error) {
       return res.status(500).json(error.message);

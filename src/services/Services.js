@@ -5,31 +5,58 @@ class Services {
     this.model = modelName;
   }
 
-  async getAllRegisters(){
-    return dataSource[this.model].findAll();
+  async getAllRegisters() {
+    try {
+      return await dataSource[this.model].findAll();
+    } catch (error) {
+      throw new Error(`Erro ao buscar todos os registros: ${error.message}`);
+    }
   }
 
   async getRegister(id) {
-    return dataSource[this.model].findByPk(id);
+    try {
+      const register = await dataSource[this.model].findByPk(id);
+      if (!register) {
+        throw new Error('Registro não encontrado.');
+      }
+      return register;
+    } catch (error) {
+      throw new Error(`Erro ao buscar registro: ${error.message}`);
+    }
   }
 
   async createRegister(newRegister) {
-    return dataSource[this.model].create(newRegister);
+    try {
+      return await dataSource[this.model].create(newRegister);
+    } catch (error) {
+      throw new Error(`Erro ao criar registro: ${error.message}`);
+    }
   }
 
   async updateRegister(updatedData, id) {
-    const updatedRegisterList = dataSource[this.model].update(updatedData, {
-      where: { id: id }
-    });
-
-    if( updatedRegisterList[0] === 0) {
-      return false;
+    try {
+      const [updatedCount] = await dataSource[this.model].update(updatedData, {
+        where: { id: id }
+      });
+      if (updatedCount === 0) {
+        throw new Error('Registro não encontrado ou não foi atualizado.');
+      }
+      return true;
+    } catch (error) {
+      throw new Error(`Erro ao atualizar registro: ${error.message}`);
     }
-    return true;
   }
 
   async deleteRegister(id) {
-    return dataSource[this.model].destroy({ where: { id: id } });
+    try {
+      const deletedCount = await dataSource[this.model].destroy({ where: { id: id } });
+      if (deletedCount === 0) {
+        throw new Error('Registro não encontrado ou não foi deletado.');
+      }
+      return deletedCount;
+    } catch (error) {
+      throw new Error(`Erro ao deletar registro: ${error.message}`);
+    }
   }
 }
 

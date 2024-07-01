@@ -21,9 +21,16 @@ O projeto consiste em uma aplicação desenvolvida em Node.js com Express.js, qu
 
    Após clonar o repositório, instale as dependências necessárias:
 
-   ```bash
-   npm install
-   ```
+```bash
+npm install
+```
+
+- Instalação do Sequelize
+Para utilizar o Sequelize em seu projeto, instale o pacote npm `sequelize` e o driver MySQL `mysql2`:
+
+```bash
+npm install sequelize mysql2
+```
 
 2. **Configuração do Banco de Dados**
 
@@ -54,21 +61,18 @@ A estrutura do projeto é organizada da seguinte forma:
 ```sh
 .
 ├── src
-    ├── controllers
-    │   
-    ├── database
-    │    ├── config
-    │    ├── migrations
-    │    ├── models
-    │    ├── seeders
-    │ 
-    ├── routes
-    │  
-    ├── services
-├── app.js
-├── .sequelizerc
-├── package.json
-└── .server.js
+│   ├── controllers      # Controladores da aplicação
+│   ├── database
+│   │   ├── config       # Configuração do Sequelize e banco de dados
+│   │   ├── migrations   # Migrations para criação de tabelas
+│   │   ├── models       # Definição dos modelos Sequelize
+│   │   ├── seeders      # Seeds para popular o banco de dados
+│   ├── routes           # Rotas da API
+│   ├── services         # Lógica de negócios (services)
+├── app.js               # Arquivo principal de configuração do Express
+├── .sequelizerc         # Configuração do Sequelize CLI
+├── package.json         # Dependências do projeto
+└── .server.js           # Script para iniciar o servidor
 ```
 
 ## Contribuição

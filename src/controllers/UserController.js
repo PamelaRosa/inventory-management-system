@@ -13,6 +13,10 @@ class UserController extends Controller {
     const { userId } = req.params;
     try {
       const listSuppliers = await userServices.getSuppliers(Number(userId));
+
+      if (listSuppliers.length === 0) {
+        return res.status(404).json({ message: 'Nenhum fornecedor encontrado.' });
+      }
       return res.status(200).json(listSuppliers);
     }
     catch (err) {
