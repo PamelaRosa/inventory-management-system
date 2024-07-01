@@ -13,9 +13,9 @@ module.exports = {
         profit: 400.00,
         start_date: new Date(),
         end_date: new Date(),
-        input_id: 1, // ID do input correspondente
-        output_id: 1, // ID do output correspondente
-        user_id: 1, // ID do usuário correspondente        
+        input_id: 1,
+        output_id: 1,
+        user_id: 1,        
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -28,9 +28,9 @@ module.exports = {
         profit: 400.00,
         start_date: new Date(),
         end_date: new Date(),
-        input_id: 2, // ID do input correspondente
-        output_id: 2, // ID do output correspondente
-        user_id: 2, // ID do usuário correspondente        
+        input_id: 2,
+        output_id: 2,
+        user_id: 2,        
         createdAt: new Date(),
         updatedAt: new Date()
       },

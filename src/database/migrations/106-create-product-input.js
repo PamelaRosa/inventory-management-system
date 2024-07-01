@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('products_outputs', {
+    await queryInterface.createTable('products_inputs', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -15,11 +15,24 @@ module.exports = {
       quantity: {
         type: Sequelize.INTEGER
       },
-      promotion: {
-        type: Sequelize.BOOLEAN
+      unit_price: {
+        type: Sequelize.DECIMAL
       },
-      output_date: {
+      input_date: {
         type: Sequelize.DATE
+      },
+      supplier: {
+        type: Sequelize.STRING
+      },
+      cnpj: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        references: {
+          model: 'suppliers',
+          key: 'cnpj'
+        },
+        onUpdate: 'CASCADE', // Atualização em cascata
+        onDelete: 'CASCADE' // Exclusão em cascata
       },
       product_id: {
         allowNull: false,
@@ -28,6 +41,8 @@ module.exports = {
           model: 'products',
           key: 'id'
         },
+        onUpdate: 'CASCADE', // Atualização em cascata
+        onDelete: 'CASCADE' // Exclusão em cascata
       },
       user_id: {
         allowNull: false,
@@ -36,6 +51,8 @@ module.exports = {
           model: 'users',
           key: 'id'
         },
+        onUpdate: 'CASCADE', // Atualização em cascata
+        onDelete: 'CASCADE' // Exclusão em cascata
       },
       createdAt: {
         allowNull: false,
@@ -48,6 +65,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('products_outputs');
+    await queryInterface.dropTable('products_inputs');
   }
 };

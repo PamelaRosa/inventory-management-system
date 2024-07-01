@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     quantity: DataTypes.INTEGER,
     unit_price: DataTypes.DECIMAL,
     unit_promotional_price: DataTypes.DECIMAL,
-    status: DataTypes.STRING,
+    status: DataTypes.BOOLEAN,
     category_id: {
       type: DataTypes.INTEGER,
       allowNull: false,

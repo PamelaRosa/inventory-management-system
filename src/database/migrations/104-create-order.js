@@ -2,43 +2,30 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('products_inputs', {
+    await queryInterface.createTable('orders', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      product: {
-        type: Sequelize.STRING
-      },
-      quantity: {
-        type: Sequelize.INTEGER
-      },
-      unit_price: {
-        type: Sequelize.DECIMAL
-      },
-      input_date: {
-        type: Sequelize.DATE
-      },
       supplier: {
         type: Sequelize.STRING
       },
-      cnpj: {
-        allowNull: false,
-        type: Sequelize.STRING,
-        references: {
-          model: 'suppliers',
-          key: 'cnpj'
-        },
+      order_date: {
+        type: Sequelize.DATE
       },
-      product_id: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'products',
-          key: 'id'
-        },
+      user_name: {
+        type: Sequelize.STRING
+      },
+      delivery_date: {
+        type: Sequelize.DATE
+      },
+      total_amount: {
+        type: Sequelize.DECIMAL
+      },
+      status: {
+        type: Sequelize.STRING
       },
       user_id: {
         allowNull: false,
@@ -47,6 +34,18 @@ module.exports = {
           model: 'users',
           key: 'id'
         },
+        onUpdate: 'CASCADE', // Atualização em cascata
+        onDelete: 'CASCADE' // Exclusão em cascata
+      },
+      cnpj: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        references: {
+          model: 'suppliers',
+          key: 'cnpj'
+        },
+        onUpdate: 'CASCADE', // Atualização em cascata
+        onDelete: 'CASCADE' // Exclusão em cascata
       },
       createdAt: {
         allowNull: false,
@@ -59,6 +58,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('products_inputs');
+    await queryInterface.dropTable('orders');
   }
 };

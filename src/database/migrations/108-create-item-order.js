@@ -22,6 +22,8 @@ module.exports = {
           model: 'orders',
           key: 'id'
         },
+        onUpdate: 'CASCADE', // Atualização em cascata
+        onDelete: 'CASCADE' // Exclusão em cascata
       },
       product_id: {
         allowNull: false,
@@ -30,6 +32,8 @@ module.exports = {
           model: 'products',
           key: 'id'
         },
+        onUpdate: 'CASCADE', // Atualização em cascata
+        onDelete: 'CASCADE' // Exclusão em cascata
       },
       createdAt: {
         allowNull: false,

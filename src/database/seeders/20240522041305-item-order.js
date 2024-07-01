@@ -7,16 +7,16 @@ module.exports = {
       {
         product: 'Product 1',
         quantity: 10,
-        order_id: 1, // ID do pedido correspondente
-        product_id: 1, // ID do produto correspondente        
+        order_id: 1,
+        product_id: 1,        
         createdAt: new Date(),
         updatedAt: new Date()
       },
       {
         product: 'Product 2',
         quantity: 15,
-        order_id: 2, // ID do pedido correspondente
-        product_id: 2, // ID do produto correspondente        
+        order_id: 2,
+        product_id: 2,        
         createdAt: new Date(),
         updatedAt: new Date()
       },

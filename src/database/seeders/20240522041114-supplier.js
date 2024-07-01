@@ -14,7 +14,8 @@ module.exports = {
         state: 'Supplier State',
         country: 'Supplier Country',
         postal_code: '12345',
-        user_id: 1, // ID do usuário correspondente        
+        status: true,
+        user_id: 1,       
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -28,7 +29,8 @@ module.exports = {
         state: 'Supplier State',
         country: 'Supplier Country',
         postal_code: '54321',
-        user_id: 2, // ID do usuário correspondente       
+        status: true,
+        user_id: 2,      
         createdAt: new Date(),
         updatedAt: new Date()
       },

@@ -26,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
     state: DataTypes.STRING,
     country: DataTypes.STRING,
     postal_code: DataTypes.STRING,
+    status: DataTypes.BOOLEAN,
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,

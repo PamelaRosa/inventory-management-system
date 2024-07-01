@@ -31,7 +31,7 @@ module.exports = {
         type: Sequelize.DECIMAL
       },
       status: {
-        type: Sequelize.STRING
+        type: Sequelize.BOOLEAN
       },
       category_id: {
         allowNull: false,

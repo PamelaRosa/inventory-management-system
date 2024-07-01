@@ -38,6 +38,9 @@ module.exports = {
       postal_code: {
         type: Sequelize.STRING
       },
+      status: {
+        type: Sequelize.BOOLEAN
+      },
       user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -45,6 +48,8 @@ module.exports = {
           model: 'users',
           key: 'id'
         },
+        onUpdate: 'CASCADE', // Atualização em cascata
+        onDelete: 'CASCADE' // Exclusão em cascata
       },
       createdAt: {
         allowNull: false,

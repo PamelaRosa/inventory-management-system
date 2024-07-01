@@ -9,8 +9,8 @@ module.exports = {
         quantity: 20,
         promotion: true,
         output_date: new Date(),
-        product_id: 1, // ID do produto correspondente
-        user_id: 1, // ID do usuário correspondente        
+        product_id: 1,
+        user_id: 1,        
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -19,8 +19,8 @@ module.exports = {
         quantity: 30,
         promotion: false,
         output_date: new Date(),
-        product_id: 2, // ID do produto correspondente
-        user_id: 2, // ID do usuário correspondente        
+        product_id: 2,
+        user_id: 2,        
         createdAt: new Date(),
         updatedAt: new Date()
       },

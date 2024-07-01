@@ -40,6 +40,8 @@ module.exports = {
           model: 'products_inputs',
           key: 'id'
         },
+        onUpdate: 'CASCADE', // Atualização em cascata
+        onDelete: 'CASCADE' // Exclusão em cascata
       },
       output_id: {
         allowNull: false,
@@ -48,6 +50,8 @@ module.exports = {
           model: 'products_outputs',
           key: 'id'
         },
+        onUpdate: 'CASCADE', // Atualização em cascata
+        onDelete: 'CASCADE' // Exclusão em cascata
       },
       user_id: {
         allowNull: false,
@@ -56,6 +60,8 @@ module.exports = {
           model: 'users',
           key: 'id'
         },
+        onUpdate: 'CASCADE', // Atualização em cascata
+        onDelete: 'CASCADE' // Exclusão em cascata
       },
       createdAt: {
         allowNull: false,
