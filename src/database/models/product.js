@@ -11,13 +11,53 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Product.init({
-    name: DataTypes.STRING,
-    brand: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [2, 200],
+          msg: 'O nome do produto deve ter no mínimo 2 caracteres e no máximo 200.'
+        }
+      }
+    },
+    brand: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [2, 100],
+          msg: 'O nome da marca deve ter no mínimo 2 caracteres e no máximo 100.'
+        }
+      }
+    },
     category: DataTypes.STRING,
     description: DataTypes.TEXT,
-    quantity: DataTypes.INTEGER,
-    unit_price: DataTypes.DECIMAL,
-    unit_promotional_price: DataTypes.DECIMAL,
+    quantity: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: {
+          args: true,
+          msg: 'Valor de quantidade inválido.'
+        }
+      }
+    },
+    unit_price: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: {
+          args: true,
+          msg: 'Valor de preço inválido.'
+        }
+      }
+    },
+    unit_promotional_price: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: {
+          args: true,
+          msg: 'Valor de preço inválido.'
+        }
+      }
+    },
     status: DataTypes.BOOLEAN,
     category_id: {
       type: DataTypes.INTEGER,

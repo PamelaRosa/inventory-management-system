@@ -12,13 +12,69 @@ module.exports = (sequelize, DataTypes) => {
 
   Balancing.init({
     most_sold: DataTypes.STRING,
-    total_sales_promotional: DataTypes.DECIMAL,
-    total_sales: DataTypes.DECIMAL,
-    investment: DataTypes.DECIMAL,
-    revenue: DataTypes.DECIMAL,
-    profit: DataTypes.DECIMAL,
-    start_date: DataTypes.DATE,
-    end_date: DataTypes.DATE,
+    total_sales_promotional: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: {
+          args: true,
+          msg: 'Valor númerico inválido.'
+        }
+      }
+    },
+    total_sales: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: {
+          args: true,
+          msg: 'Valor númerico inválido.'
+        }
+      }
+    },
+    investment: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: {
+          args: true,
+          msg: 'Valor númerico inválido.'
+        }
+      }
+    },
+    revenue: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: {
+          args: true,
+          msg: 'Valor númerico inválido.'
+        }
+      }
+    },
+    profit: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: {
+          args: true,
+          msg: 'Valor númerico inválido.'
+        }
+      }
+    },
+    start_date: {
+      type: DataTypes.DATE,
+      validate: {
+        isDate: {
+          args: true,
+          msg: 'Formato de data inválido.'
+        }
+      }
+    },
+    end_date: {
+      type: DataTypes.DATE,
+      validate: {
+        isDate: {
+          args: true,
+          msg: 'Formato de data inválido.'
+        }
+      }
+    },
     input_id: {
       type: DataTypes.INTEGER,
       allowNull: false,

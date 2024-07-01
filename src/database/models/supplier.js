@@ -2,6 +2,8 @@
 const {
   Model
 } = require('sequelize');
+const { cnpj } = require('cpf-cnpj-validator');
+
 module.exports = (sequelize, DataTypes) => {
   class Supplier extends Model {
     static associate(models) {
@@ -13,13 +15,35 @@ module.exports = (sequelize, DataTypes) => {
   Supplier.init({
     cnpj: {
       type: DataTypes.STRING,
-      unique: true
+      unique: true,
+      allowNull: false,
+      validate: {
+        notEmpty: true,
+        isCNPJValid(value) {
+          if (!cnpj.isValid(value)) {
+            throw new Error('CNPJ inválido');
+          }
+        }
+      }
     },
     company: {
       type: DataTypes.STRING,
-      unique: true
+      validate: {
+        len: {
+          args: [2, 200],
+          msg: 'O nome do fornecedor deve ter no mínimo 2 caracteres e no máximo 200.'
+        }
+      }
     },
-    email: DataTypes.STRING,
+    email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: {
+          args: true,
+          msg: 'Formato do email é inválido'
+        }
+      }
+    },
     contact: DataTypes.STRING,
     address: DataTypes.STRING,
     city: DataTypes.STRING,

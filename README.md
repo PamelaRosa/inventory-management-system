@@ -33,6 +33,18 @@ Para utilizar o Sequelize em seu projeto, instale o pacote npm `sequelize` e o d
 npm install sequelize mysql2
 ```
 
+- Validação de CNPJ
+
+O campo `cnpj` no modelo `Supplier` é validado para garantir que é um CNPJ válido. Utilizamos a biblioteca `cpf-cnpj-validator` para realizar essa validação.
+
+   - Instalação da Biblioteca de Validação
+
+Para instalar a biblioteca de validação de CNPJ, execute o seguinte comando:
+
+```bash
+npm install cpf-cnpj-validator
+```
+
 2. **Configuração do Banco de Dados**
 
 - Crie um banco de dados MySQL.

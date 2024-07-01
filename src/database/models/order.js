@@ -10,10 +10,34 @@ module.exports = (sequelize, DataTypes) => {
   }
   Order.init({
     supplier: DataTypes.STRING,
-    order_date: DataTypes.DATE,
+    order_date: {
+      type: DataTypes.DATE,
+      validate: {
+        isDate: {
+          args: true,
+          msg: 'Formato de data inválido.'
+        }
+      }
+    },
     user_name: DataTypes.STRING,
-    delivery_date: DataTypes.DATE,
-    total_amount: DataTypes.DECIMAL,
+    delivery_date: {
+      type: DataTypes.DATE,
+      validate: {
+        isDate: {
+          args: true,
+          msg: 'Formato de data inválido.'
+        }
+      }
+    },
+    total_amount: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: {
+          args: true,
+          msg: 'Valor númerico inválido.'
+        }
+      }
+    },
     status: DataTypes.STRING,
     user_id: {
       type: DataTypes.INTEGER,

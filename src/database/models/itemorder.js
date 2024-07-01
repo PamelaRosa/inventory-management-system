@@ -9,7 +9,15 @@ module.exports = (sequelize, DataTypes) => {
   }
   ItemsOrder.init({
     product: DataTypes.STRING,
-    quantity: DataTypes.INTEGER,
+    quantity: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: {
+          args: true,
+          msg: 'Valor de quantidade inválido.'
+        }
+      }
+    },
     order_id: {
       type: DataTypes.INTEGER,
       allowNull: false,

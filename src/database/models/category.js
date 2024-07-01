@@ -9,7 +9,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Category.init({
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [2, 60],
+          msg: 'O nome deve ter no mínimo 2 caracteres e no máximo 60.'
+        }
+      }
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false

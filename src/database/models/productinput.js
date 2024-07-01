@@ -11,9 +11,33 @@ module.exports = (sequelize, DataTypes) => {
   }
   ProductsInput.init({
     product: DataTypes.STRING,
-    quantity: DataTypes.INTEGER,
-    unit_price: DataTypes.DECIMAL,
-    input_date: DataTypes.DATE,
+    quantity: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: {
+          args: true,
+          msg: 'Valor de quantidade inválido.'
+        }
+      }
+    },
+    unit_price: {
+      type: DataTypes.DECIMAL,
+      validate: {
+        isDecimal: {
+          args: true,
+          msg: 'Valor de preço inválido.'
+        }
+      }
+    },
+    input_date: {
+      type: DataTypes.DATE,
+      validate: {
+        isDate: {
+          args: true,
+          msg: 'Formato de data inválido.'
+        }
+      }
+    },
     supplier: DataTypes.STRING,
     cnpj: {
       type: DataTypes.STRING,
