@@ -54,7 +54,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Balancing',
-    tableName: 'balancings'
+    tableName: 'balancings',
+    paranoid: true
   });
 
   return Balancing;
