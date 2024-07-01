@@ -14,5 +14,6 @@ router.put('/users/:id', (req, res) => userController.update(req, res));
 router.delete('/users/:id', (req, res) => userController.delete(req, res));
 
 // Supplier
+router.get('/users/:userId/suppliers', (req, res) => userController.getSuppliers(req, res));
 router.post('/users/:userId/suppliers', (req, res) => supplierController.post(req, res));
 module.exports = router;
