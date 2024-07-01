@@ -25,10 +25,10 @@ class Controller {
 
   // POST 
   async post(req, res) {
-    const newUser = req.body;
+    const newData = req.body;
 
     try {
-      const newRegister = await this.entityService.createRegister(newUser);
+      const newRegister = await this.entityService.createRegister(newData);
       return res.status(200).json(newRegister);
     } catch (error) {
       return res.status(500).json(error.message);

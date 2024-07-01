@@ -8,7 +8,6 @@ module.exports = {
         input_id: 11,
         name: 'Product One',
         brand: 'Brand A',
-        category: 'Category X',
         description: 'Description for Product One',
         quantity: 50,
         unit_price: 10.00,
@@ -16,13 +15,13 @@ module.exports = {
         status: 'Available',
         createdAt: new Date(),
         updatedAt: new Date(),
-        user_id: 6
+        user_id: 6,
+        category_id: 11
       },
       {
         input_id: 12,
         name: 'Product Two',
         brand: 'Brand B',
-        category: 'Category Y',
         description: 'Description for Product Two',
         quantity: 75,
         unit_price: 20.00,
@@ -30,13 +29,13 @@ module.exports = {
         status: 'Available',
         createdAt: new Date(),
         updatedAt: new Date(),
-        user_id: 7
+        user_id: 7,
+        category_id: 12
       },
       {
         input_id: 13,
         name: 'Product Three',
         brand: 'Brand C',
-        category: 'Category Z',
         description: 'Description for Product Three',
         quantity: 100,
         unit_price: 15.00,
@@ -44,13 +43,13 @@ module.exports = {
         status: 'Out of Stock',
         createdAt: new Date(),
         updatedAt: new Date(),
-        user_id: 8
+        user_id: 8,
+        category_id: 13
       },
       {
         input_id: 14,
         name: 'Product Four',
         brand: 'Brand D',
-        category: 'Category X',
         description: 'Description for Product Four',
         quantity: 25,
         unit_price: 30.00,
@@ -58,13 +57,13 @@ module.exports = {
         status: 'Available',
         createdAt: new Date(),
         updatedAt: new Date(),
-        user_id: 9
+        user_id: 9,
+        category_id: 14
       },
       {
         input_id: 15,
         name: 'Product Five',
         brand: 'Brand E',
-        category: 'Category Y',
         description: 'Description for Product Five',
         quantity: 80,
         unit_price: 12.50,
@@ -72,7 +71,8 @@ module.exports = {
         status: 'Available',
         createdAt: new Date(),
         updatedAt: new Date(),
-        user_id:  10
+        user_id:  10,
+        category_id: 15
       }
     ], {});
   },

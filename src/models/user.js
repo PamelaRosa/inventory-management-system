@@ -8,9 +8,9 @@ module.exports = (sequelize, DataTypes) => {
       User.hasMany(models.Supplier, { foreignKey: 'user_id' });
       User.hasMany(models.Order, { foreignKey: 'user_id' });
       User.hasMany(models.Product, { foreignKey: 'user_id' });
-      User.hasMany(models.ProductInput, { foreignKey: 'userId' });
-      User.hasMany(models.ProductOutput, { foreignKey: 'userId' });
-      User.hasMany(models.Balancing, { foreignKey: 'userId' });
+      User.hasMany(models.ProductsInput, { foreignKey: 'user_id' });
+      User.hasMany(models.ProductsOutput, { foreignKey: 'user_id' });
+      User.hasMany(models.Balancing, { foreignKey: 'user_id' });
     }
   }
   User.init({

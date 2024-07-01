@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     static associate(models) {
@@ -20,7 +18,39 @@ module.exports = (sequelize, DataTypes) => {
     quantity: DataTypes.INTEGER,
     unit_price: DataTypes.DECIMAL,
     unit_promotional_price: DataTypes.DECIMAL,
-    status: DataTypes.STRING
+    status: DataTypes.STRING,
+    input_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'products_inputs',
+        key: 'id'
+      }
+    },
+    category_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'categories',
+        key: 'id'
+      }
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users',
+        key: 'id'
+      }
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false
+    }
   }, {
     sequelize,
     modelName: 'Product',

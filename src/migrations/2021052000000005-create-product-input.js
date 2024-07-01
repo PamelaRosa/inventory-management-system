@@ -32,6 +32,22 @@ module.exports = {
           key: 'cnpj'
         },
       },
+      product_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'products',
+          key: 'id'
+        },
+      },
+      user_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id'
+        },
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
