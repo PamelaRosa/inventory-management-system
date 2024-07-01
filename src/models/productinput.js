@@ -1,15 +1,15 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class ProductInput extends Model {
+  class ProductsInput extends Model {
     static associate(models) {
-      ProductInput.belongsTo(models.User, { foreignKey: 'user_id' });
-      ProductInput.belongsTo(models.Supplier, { foreignKey: 'cnpj', targetKey: 'cnpj' });
-      ProductInput.belongsTo(models.Product, { foreignKey: 'product_id' });
-      ProductInput.hasMany(models.Balancing, { foreignKey: 'input_id' });
+      ProductsInput.belongsTo(models.User, { foreignKey: 'user_id' });
+      ProductsInput.belongsTo(models.Supplier, { foreignKey: 'cnpj', targetKey: 'cnpj' });
+      ProductsInput.belongsTo(models.Product, { foreignKey: 'product_id' });
+      ProductsInput.hasMany(models.Balancing, { foreignKey: 'input_id' });
     }
   }
-  ProductInput.init({
+  ProductsInput.init({
     product: DataTypes.STRING,
     quantity: DataTypes.INTEGER,
     unit_price: DataTypes.DECIMAL,
@@ -49,8 +49,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'ProductInput',
+    modelName: 'ProductsInput',
     tableName: 'products_inputs'
   });
-  return ProductInput;
+  return ProductsInput;
 };

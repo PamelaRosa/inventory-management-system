@@ -1,14 +1,14 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class ProductOutput extends Model {
+  class ProductsOutput extends Model {
     static associate(models) {
-      ProductOutput.belongsTo(models.User, { foreignKey: 'user_id' });
-      ProductOutput.belongsTo(models.Product, { foreignKey: 'product_id' });
-      ProductOutput.hasMany(models.Balancing, { foreignKey: 'output_id' });
+      ProductsOutput.belongsTo(models.User, { foreignKey: 'user_id' });
+      ProductsOutput.belongsTo(models.Product, { foreignKey: 'product_id' });
+      ProductsOutput.hasMany(models.Balancing, { foreignKey: 'output_id' });
     }
   }
-  ProductOutput.init({
+  ProductsOutput.init({
     product: DataTypes.STRING,
     quantity: DataTypes.INTEGER,
     promotion: DataTypes.BOOLEAN,
@@ -39,8 +39,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'ProductOutput',
+    modelName: 'ProductsOutput',
     tableName: 'products_outputs'
   });
-  return ProductOutput;
+  return ProductsOutput;
 };

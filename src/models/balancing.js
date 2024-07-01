@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
   class Balancing extends Model {
     static associate(models) {
       Balancing.belongsTo(models.User, { foreignKey: 'user_id' });
-      Balancing.belongsTo(models.ProductInput, { foreignKey: 'input_id' });
-      Balancing.belongsTo(models.ProductOutput, { foreignKey: 'output_id' });
+      Balancing.belongsTo(models.ProductsInput, { foreignKey: 'input_id' });
+      Balancing.belongsTo(models.ProductsOutput, { foreignKey: 'output_id' });
     }
   }
 
