@@ -5,55 +5,25 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert('products_outputs', [
       {
-        product_id: 16,
-        product: 'Product One',
-        quantity: 10,
-        promotion: 1,
-        output_date: new Date(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        user_id: 6
-      },
-      {
-        product_id: 17,
-        product: 'Product Two',
+        product: 'Product 1',
         quantity: 20,
-        promotion: 0,
+        promotion: true,
         output_date: new Date(),
+        product_id: 1, // ID do produto correspondente
+        user_id: 1, // ID do usuário correspondente        
         createdAt: new Date(),
-        updatedAt: new Date(),
-        user_id: 7
+        updatedAt: new Date()
       },
       {
-        product_id: 18,
-        product: 'Product Three',
-        quantity: 15,
-        promotion: 1,
-        output_date: new Date(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        user_id: 8
-      },
-      {
-        product_id: 19,
-        product: 'Product Four',
-        quantity: 5,
-        promotion: 0,
-        output_date: new Date(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        user_id: 9
-      },
-      {
-        product_id: 20,
-        product: 'Product Five',
+        product: 'Product 2',
         quantity: 30,
-        promotion: 1,
+        promotion: false,
         output_date: new Date(),
+        product_id: 2, // ID do produto correspondente
+        user_id: 2, // ID do usuário correspondente        
         createdAt: new Date(),
-        updatedAt: new Date(),
-        user_id: 10
-      }
+        updatedAt: new Date()
+      },
     ], {});
   },
 

@@ -1,12 +1,12 @@
 'use strict';
 const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
     static associate(models) {
       Product.belongsTo(models.User, { foreignKey: 'user_id' });
-      Product.belongsTo(models.ProductsInput, { foreignKey: 'input_id' });
-      Product.belongsTo(models.Categories, { foreignKey: 'category_id' });
-      Product.hasMany(models.ProductsOutput, { foreignKey: 'product_id' });
+      Product.belongsTo(models.Category, { foreignKey: 'category_id' });
+      Product.hasMany(models.ProductOutput, { foreignKey: 'product_id' });
       Product.hasMany(models.ItemsOrder, { foreignKey: 'product_id' });
     }
   }
@@ -19,14 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     unit_price: DataTypes.DECIMAL,
     unit_promotional_price: DataTypes.DECIMAL,
     status: DataTypes.STRING,
-    input_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'products_inputs',
-        key: 'id'
-      }
-    },
     category_id: {
       type: DataTypes.INTEGER,
       allowNull: false,

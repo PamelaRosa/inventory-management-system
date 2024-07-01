@@ -33,14 +33,6 @@ module.exports = {
       status: {
         type: Sequelize.STRING
       },
-      input_id: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'products_inputs',
-          key: 'id'
-        },
-      },
       category_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -48,6 +40,8 @@ module.exports = {
           model: 'categories',
           key: 'id'
         },
+        onUpdate: 'CASCADE', // Atualização em cascata
+        onDelete: 'CASCADE' // Exclusão em cascata
       },
       user_id: {
         allowNull: false,
@@ -56,6 +50,8 @@ module.exports = {
           model: 'users',
           key: 'id'
         },
+        onUpdate: 'CASCADE', // Atualização em cascata
+        onDelete: 'CASCADE' // Exclusão em cascata
       },
       createdAt: {
         allowNull: false,
