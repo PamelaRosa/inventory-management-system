@@ -46,6 +46,22 @@ class Controller {
     }
   }
 
+  // GET paginated
+  async getList(req, res) {
+    const { ...params } = req.params;
+    const { page = 1, pageSize = 10, order = 'DESC'} = req.query;
+    const where = converterIds(params);
+    try {
+      const paginatedData = await this.entityService.getPaginatedRegisters(where, Number(page), Number(pageSize), order.toUpperCase());
+      if (paginatedData.data.length === 0) {
+        return res.status(404).json({ message: 'Nenhum registro encontrado.' });
+      }
+      return res.status(200).json(paginatedData);
+    } catch (error) {
+      return res.status(500).json(error.message);
+    }
+  }
+
   // POST 
   async post(req, res) {
     const newData = req.body;

@@ -27,13 +27,39 @@ class Services {
 
   async getOneRegister(where) {
     try {
-      const register = await dataSource[this.model].findOne({ where: {...where} } );
+      const register = await dataSource[this.model].findOne({ where: {...where} });
       if (!register) {
         throw new Error('Registro não encontrado.');
       }
       return register;
     } catch (error) {
       throw new Error(`Erro ao buscar registro: ${error.message}`);
+    }
+  }
+  
+  async getPaginatedRegisters(where, page, pageSize, order = 'DESC') {
+    try {
+      const limit = pageSize;
+      const offset = (page - 1) * pageSize;
+
+      const { count, rows } = await dataSource[this.model].findAndCountAll({
+        where: { ...where },
+        limit: limit,
+        offset: offset,
+        order: [['createdAt', order]]
+      });
+
+      const totalPages = Math.ceil(count / pageSize);
+
+      return {
+        data: rows,
+        currentPage: page,
+        totalPages: totalPages,
+        hasNextPage: page < totalPages,
+        hasPreviousPage: page > 1
+      };
+    } catch (error) {
+      throw new Error(`Erro ao buscar registros paginados: ${error.message}`);
     }
   }
 
@@ -73,3 +99,4 @@ class Services {
 }
 
 module.exports = Services;
+
