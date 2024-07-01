@@ -6,7 +6,7 @@ class UserServices extends Services {
   }
 
   async getSuppliers(id) {
-    const user = await super.getRegister(id);
+    const user = await super.getRegisterById(id);
     const listSuppliers = await user.getSuppliers();
     return listSuppliers;
   }

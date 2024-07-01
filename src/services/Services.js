@@ -13,9 +13,21 @@ class Services {
     }
   }
 
-  async getRegister(id) {
+  async getRegisterById(id) {
     try {
       const register = await dataSource[this.model].findByPk(id);
+      if (!register) {
+        throw new Error('Registro não encontrado.');
+      }
+      return register;
+    } catch (error) {
+      throw new Error(`Erro ao buscar registro: ${error.message}`);
+    }
+  }
+
+  async getOneRegister(where) {
+    try {
+      const register = await dataSource[this.model].findOne({ where: {...where} } );
       if (!register) {
         throw new Error('Registro não encontrado.');
       }
@@ -33,10 +45,10 @@ class Services {
     }
   }
 
-  async updateRegister(updatedData, id) {
+  async updateRegister(updatedData, where) {
     try {
       const [updatedCount] = await dataSource[this.model].update(updatedData, {
-        where: { id: id }
+        where: { ...where }
       });
       if (updatedCount === 0) {
         throw new Error('Registro não encontrado ou não foi atualizado.');

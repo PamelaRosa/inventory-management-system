@@ -82,6 +82,7 @@ A estrutura do projeto é organizada da seguinte forma:
 │   │   ├── seeders      # Seeds para popular o banco de dados
 │   ├── routes           # Rotas da API
 │   ├── services         # Lógica de negócios (services)
+│   ├── utils            # Utilitários e funções auxiliares
 ├── app.js               # Arquivo principal de configuração do Express
 ├── .sequelizerc         # Configuração do Sequelize CLI
 ├── package.json         # Dependências do projeto

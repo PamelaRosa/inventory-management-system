@@ -1,3 +1,5 @@
+const converterIds = require('../utils/stringConverter.js');
+
 class Controller {
   constructor(entityService) {
     this.entityService = entityService;
@@ -15,11 +17,26 @@ class Controller {
     }
   }
 
-  // GET one
-  async getOne(req, res) {
+  // GET one by id
+  async getById(req, res) {
     const { id } = req.params;
     try {
-      const register = await this.entityService.getRegister(Number(id));
+      const register = await this.entityService.getRegisterById(Number(id));
+      if (!register) {
+        return res.status(404).json({ message: 'Registro não encontrado.' });
+      }
+      return res.status(200).json(register);
+    } catch (error) {
+      return res.status(500).json(error.message);
+    }
+  }
+  // GET one
+  async getOne(req, res) {
+    const { ...params } = req.params;
+    const where = converterIds(params);
+
+    try {
+      const register = await this.entityService.getOneRegister(where);
       if (!register) {
         return res.status(404).json({ message: 'Registro não encontrado.' });
       }
@@ -43,11 +60,12 @@ class Controller {
 
   // PUT 
   async update(req, res) {
-    const { id } = req.params;
+    const { ...params } = req.params;
     const updatedData = req.body;
+    const where = converterIds(params);
 
     try {
-      const isUpdated = await this.entityService.updateRegister(updatedData, Number(id));
+      const isUpdated = await this.entityService.updateRegister(updatedData, where);
       if(!isUpdated) {
         return res.status(404).json({ message: 'Registro não encontrado ou não foi atualizado.'});
       }
