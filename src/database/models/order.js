@@ -19,7 +19,24 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    user_name: DataTypes.STRING,
+    client: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [3, 30],
+          msg: 'O nome deve ter no mínimo 3 caracteres e no máximo 30.'
+        }
+      }
+    },
+    client_email: {
+      type: DataTypes.STRING,
+      validate: {
+        isEmail: {
+          args: true,
+          msg: 'Formato do email é inválido'
+        }
+      }
+    },
     delivery_date: {
       type: DataTypes.DATE,
       validate: {
