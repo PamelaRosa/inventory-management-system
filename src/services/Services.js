@@ -37,7 +37,7 @@ class Services {
     }
   }
   
-  async getPaginatedRegisters(where, page, pageSize, order = 'DESC') {
+  async getPaginatedRegisters(where, page, pageSize, order) {
     try {
       const limit = pageSize;
       const offset = (page - 1) * pageSize;
@@ -55,6 +55,7 @@ class Services {
         data: rows,
         currentPage: page,
         totalPages: totalPages,
+        totalData: count,
         hasNextPage: page < totalPages,
         hasPreviousPage: page > 1
       };
