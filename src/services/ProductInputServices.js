@@ -2,7 +2,7 @@ const Services = require('./Services');
 
 class ProductInputServices extends Services {
   constructor() {
-    super('ProductInput');
+    super('ProductsInput');
   }
 }
 

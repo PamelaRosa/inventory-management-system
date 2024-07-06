@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       Supplier.belongsTo(models.User, { foreignKey: 'user_id' });
       Supplier.hasMany(models.Order, { foreignKey: 'cnpj', type: DataTypes.STRING });
       Supplier.hasMany(models.ProductsInput, { foreignKey: 'cnpj', type: DataTypes.STRING });
+      Supplier.hasMany(models.Product, { foreignKey: 'cnpj', type: DataTypes.STRING });
     }
   }
   Supplier.init({

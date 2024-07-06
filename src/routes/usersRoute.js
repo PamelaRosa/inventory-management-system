@@ -28,18 +28,18 @@ router.delete('/users/:user_id/suppliers/:id', (req, res) => supplierController.
 
 // Products 
 router.get('/users/:user_id/products', (req, res) => productController.getList(req, res));
-router.get('/users/:user_id/products/:product_id', (req, res) => productController.getOne(req, res));
+router.get('/users/:user_id/products/:id', (req, res) => productController.getOne(req, res));
 
 router.post('/users/:user_id/products', (req, res) => productController.post(req, res));
-router.put('/users/:user_id/products/:product_id', (req, res) => productController.update(req, res));
-router.delete('/users/:user_id/products/:product_id', (req, res) => productController.delete(req, res));
+router.put('/users/:user_id/products/:id', (req, res) => productController.update(req, res));
+router.delete('/users/:user_id/products/:id', (req, res) => productController.delete(req, res));
 
 // Orders 
 router.get('/users/:user_id/orders', (req, res) => orderController.getList(req, res));
-router.get('/users/:user_id/orders/:order_id', (req, res) => orderController.getOne(req, res));
+router.get('/users/:user_id/orders/:id', (req, res) => orderController.getOne(req, res));
 
 router.post('/users/:user_id/orders', (req, res) => orderController.post(req, res));
-router.put('/users/:user_id/orders/:order_id', (req, res) => orderController.update(req, res));
-router.delete('/users/:user_id/orders/:order_id', (req, res) => orderController.delete(req, res));
+router.put('/users/:user_id/orders/:id', (req, res) => orderController.update(req, res));
+router.delete('/users/:user_id/orders/:id', (req, res) => orderController.delete(req, res));
 
 module.exports = router;

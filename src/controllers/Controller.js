@@ -49,7 +49,7 @@ class Controller {
   // GET paginated
   async getList(req, res) {
     const { ...params } = req.params;
-    const { page = 1, pageSize = 10, order = 'DESC'} = req.query;
+    const { page = 1, pageSize = 10, order = 'DESC' } = req.query;
     const where = converterIds(params);
     try {
       const paginatedData = await this.entityService.getPaginatedRegisters(where, Number(page), Number(pageSize), order.toUpperCase());
@@ -64,7 +64,12 @@ class Controller {
 
   // POST 
   async post(req, res) {
+    const { ...params } = req.params;
     const newData = req.body;
+
+    if (newData.user_id !== params.user_id) {
+      return res.status(409).json({ message: 'O ID fornecido no corpo da requisição entra em conflito com o ID na URL.' });
+    }
 
     try {
       const newRegister = await this.entityService.createRegister(newData);
@@ -80,10 +85,14 @@ class Controller {
     const updatedData = req.body;
     const where = converterIds(params);
 
+    if (updatedData.user_id != params.user_id) {
+      return res.status(409).json({ message: 'O ID fornecido no corpo da requisição entra em conflito com o ID na URL.' });
+    }
+
     try {
       const isUpdated = await this.entityService.updateRegister(updatedData, where);
-      if(!isUpdated) {
-        return res.status(404).json({ message: 'Registro não encontrado ou não foi atualizado.'});
+      if (!isUpdated) {
+        return res.status(404).json({ message: 'Registro não encontrado ou não foi atualizado.' });
       }
       return res.status(200).json({ message: 'Atualizado com sucesso!' });
     } catch (error) {

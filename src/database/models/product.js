@@ -1,5 +1,6 @@
 'use strict';
 const { Model } = require('sequelize');
+const { cnpj } = require('cpf-cnpj-validator');
 
 module.exports = (sequelize, DataTypes) => {
   class Product extends Model {
@@ -8,8 +9,10 @@ module.exports = (sequelize, DataTypes) => {
       Product.belongsTo(models.Category, { foreignKey: 'category_id' });
       Product.hasMany(models.ProductsInput, { foreignKey: 'product_id' });
       Product.hasMany(models.ItemsOrder, { foreignKey: 'product_id' });
+      Product.belongsTo(models.Supplier, { foreignKey: 'cnpj', targetKey: 'cnpj' }); // Associação com Supplier
     }
   }
+
   Product.init({
     name: {
       type: DataTypes.STRING,
@@ -75,6 +78,22 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id'
       }
     },
+    cnpj: { 
+      type: DataTypes.STRING,
+      allowNull: false,
+      references: {
+        model: 'suppliers',
+        key: 'cnpj'
+      },
+      validate: {
+        notEmpty: true,
+        isCNPJValid(value) {
+          if (!cnpj.isValid(value)) {
+            throw new Error('CNPJ inválido');
+          }
+        }
+      }
+    },
     createdAt: {
       type: DataTypes.DATE,
       allowNull: false
@@ -89,5 +108,6 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'products',
     paranoid: true
   });
+
   return Product;
 };
