@@ -1,11 +1,13 @@
 const Controller = require('./Controller.js');
 const ProductServices = require('../services/ProductServices.js');
 const ProductInputServices = require('../services/ProductInputServices.js');
+const ProductOutputServices = require('../services/ProductOutputServices.js');
 const SupplierServices = require('../services/SupplierServices.js');
 const converterIds = require('../utils/stringConverter.js');
 
 const productServices = new ProductServices();
 const productInputServices = new ProductInputServices();
+const productOutputServices = new ProductOutputServices();
 const supplierServices = new SupplierServices();
 
 class ProductController extends Controller {
@@ -23,7 +25,7 @@ class ProductController extends Controller {
     try {
       const newProduct = await this.entityService.createRegister(newData);
 
-      const supplierRelated = await supplierServices.getOneRegister({user_id: newProduct.user_id, cnpj: newProduct.cnpj});
+      const supplierRelated = await supplierServices.getOneRegister({ user_id: newProduct.user_id, cnpj: newProduct.cnpj });
 
       if (!supplierRelated) {
         return res.status(404).json({ message: 'Fornecedor não encontrado.' });
@@ -61,10 +63,47 @@ class ProductController extends Controller {
     }
 
     try {
+      const productRelated = await productServices.getOneRegister({ id: updatedData.id });
+
+      let oldQuantity = productRelated.quantity;
+
       const isUpdated = await this.entityService.updateRegister(updatedData, where);
       if (!isUpdated) {
         return res.status(404).json({ message: 'Registro não encontrado ou não foi atualizado.' });
       }
+
+      let newQuantity = updatedData.quantity;
+
+      if (oldQuantity !== newQuantity) {
+        // let existingOutput;
+        // try {
+        //   existingOutput = await productOutputServices.getOneRegister({ product_id: where.id });
+        // } catch (err) {
+        //   return false;
+        // }
+        let isPromotional = (updatedData.unit_promotional_price > 0
+          && updatedData.unit_promotional_price < updatedData.unit_price) ? true : false;
+
+        let outputQuantity = oldQuantity - newQuantity;
+
+        // if (existingOutput) {
+        //   await productOutputServices.updateRegister({
+        //     product: updatedData.name,
+        //     quantity: existingOutput.quantity + outputQuantity,
+        //     promotion: isPromotional,
+        //     output_date: new Date(),
+        //   }, { product_id: where.id });
+        // } else {
+        await productOutputServices.createRegister({
+          product_id: where.id,
+          product: updatedData.name,
+          quantity: outputQuantity,
+          promotion: isPromotional,
+          output_date: new Date(),
+          user_id: updatedData.user_id,
+        });
+      }
+
       return res.status(200).json({ message: 'Atualizado com sucesso!' });
     } catch (error) {
       return res.status(500).json(error.message);
