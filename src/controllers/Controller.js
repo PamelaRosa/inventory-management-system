@@ -67,7 +67,7 @@ class Controller {
     const { ...params } = req.params;
     const newData = req.body;
 
-    if (newData.user_id !== params.user_id) {
+    if (newData.user_id.toString() !== params.user_id) {
       return res.status(409).json({ message: 'O ID fornecido no corpo da requisição entra em conflito com o ID na URL.' });
     }
 

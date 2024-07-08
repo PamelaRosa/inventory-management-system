@@ -75,25 +75,11 @@ class ProductController extends Controller {
       let newQuantity = updatedData.quantity;
 
       if (oldQuantity !== newQuantity) {
-        // let existingOutput;
-        // try {
-        //   existingOutput = await productOutputServices.getOneRegister({ product_id: where.id });
-        // } catch (err) {
-        //   return false;
-        // }
         let isPromotional = (updatedData.unit_promotional_price > 0
           && updatedData.unit_promotional_price < updatedData.unit_price) ? true : false;
 
         let outputQuantity = oldQuantity - newQuantity;
 
-        // if (existingOutput) {
-        //   await productOutputServices.updateRegister({
-        //     product: updatedData.name,
-        //     quantity: existingOutput.quantity + outputQuantity,
-        //     promotion: isPromotional,
-        //     output_date: new Date(),
-        //   }, { product_id: where.id });
-        // } else {
         await productOutputServices.createRegister({
           product_id: where.id,
           product: updatedData.name,
