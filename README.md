@@ -6,7 +6,7 @@ Repositório de sistema de gerenciamento de inventário
 
 ## Descrição do Projeto
 
-O projeto consiste em uma aplicação desenvolvida em Node.js com Express.js, que utiliza o Sequelize como ORM para gerenciar um banco de dados MySQL.
+O projeto consiste em uma aplicação full-stack desenvolvida vite e react para front-end e Node.js com Express.js para o back-end, que utiliza o Sequelize como ORM para gerenciar um banco de dados MySQL.
 
 ## Requisitos
 
@@ -19,15 +19,15 @@ O projeto consiste em uma aplicação desenvolvida em Node.js com Express.js, qu
 
 1. **Instalação de Dependências**
 
-   Após clonar o repositório, instale as dependências necessárias:
+   Após clonar o repositório, instale as dependências necessárias dentro da pasta de `backend` e `frontend`:
 
 ```bash
 npm install
 ```
 
-- Instalação do Sequelize
+- Instalação do Sequelize no `backend`
 
-Para utilizar o Sequelize em seu projeto, instale o pacote npm `sequelize` e o driver MySQL `mysql2`:
+Para utilizar o Sequelize em seu projeto, instale o pacote npm `sequelize` e o driver MySQL `mysql2` dentro da pasta de `backend`:
 
 ```bash
 npm install sequelize mysql2
@@ -37,7 +37,7 @@ npm install sequelize mysql2
 
 O campo `cnpj` no modelo `Supplier` é validado para garantir que é um CNPJ válido. Utilizamos a biblioteca `cpf-cnpj-validator` para realizar essa validação.
 
-   - Instalação da Biblioteca de Validação
+   - Instalação da Biblioteca de Validação no `backend`
 
 Para instalar a biblioteca de validação de CNPJ, execute o seguinte comando:
 
@@ -59,35 +59,15 @@ Execute as migrations para criar as tabelas no banco de dados:
 ```
 
 4. **Execução do Projeto**
-Inicie o servidor localmente:
+Inicie o servidor localmente, executar o comando na pasta de `backend` e `frontend`:
 
 ```bash
 npm run dev
 ```
 
 O servidor estará disponível em http://localhost:3000.
+O projeto estará disponível em http://localhost:5173.
 
-## Estrutura do Projeto
-
-A estrutura do projeto é organizada da seguinte forma:
-
-```sh
-.
-├── src
-│   ├── controllers      # Controladores da aplicação
-│   ├── database
-│   │   ├── config       # Configuração do Sequelize e banco de dados
-│   │   ├── migrations   # Migrations para criação de tabelas
-│   │   ├── models       # Definição dos modelos Sequelize
-│   │   ├── seeders      # Seeds para popular o banco de dados
-│   ├── routes           # Rotas da API
-│   ├── services         # Lógica de negócios (services)
-│   ├── utils            # Utilitários e funções auxiliares
-├── app.js               # Arquivo principal de configuração do Express
-├── .sequelizerc         # Configuração do Sequelize CLI
-├── package.json         # Dependências do projeto
-└── .server.js           # Script para iniciar o servidor
-```
 
 ## Contribuição
 
