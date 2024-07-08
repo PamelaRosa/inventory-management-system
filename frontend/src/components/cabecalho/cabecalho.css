@@ -1,0 +1,73 @@
+.cabecalho {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.cabecalho .primeira-coluna {
+  flex: 1;
+}
+
+.cabecalho .segunda-coluna {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cabecalho h1 {
+  font-size: 24px;
+  margin: 4px 0;
+}
+
+.divBusca {
+  background-color: white;
+  border: 1px solid #CCC;
+  border-radius: 15px;
+  width: 200px;
+  height: 34px;
+  position: relative;
+  padding: 2px;
+}
+
+.divBusca>img {
+  position: absolute;
+  top: 8px;
+  left: 5px;
+}
+
+.txtBusca {
+  background-color: transparent;
+  padding-left: 25px;
+  font-style: italic;
+  font-size: 15px;
+  border-radius: 15px;
+  border: none;
+  width: 100%;
+  height: 100%;
+  outline: none;
+}
+
+.perfil {
+  display: flex;
+}
+
+.perfil a {
+  display: contents;
+  color: inherit;
+}
+
+.perfil .texto {
+  margin-left: 6px;
+}
+
+.perfil .texto .nome {
+  font-weight: bold;
+  font-size: 14px;
+  margin: 0;
+}
+
+.perfil .texto .tipo-usuario {
+  font-size: 11px;
+  margin: 0;
+}

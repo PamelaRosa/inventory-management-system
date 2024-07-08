@@ -1,0 +1,33 @@
+.tabela {
+  width: 100%;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.tabela .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.tabela .header h2 {
+  font-size: 18px;
+}
+
+.status {
+  padding: 4px 10px;
+  color: white;
+  border-radius: 5px;
+  background-color: #CCC;
+  text-align: center;
+  width: 140px;
+}
+
+.status.estoque {
+  background-color: rgb(2, 150, 2);
+}
+
+.status.fora-estoque {
+  background-color: rgb(202, 0, 0);
+}

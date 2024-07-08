@@ -1,0 +1,101 @@
+.metrica {
+  display: flex;
+  flex-direction: row !important;
+  padding: 12px;
+  align-items: center;
+}
+
+.metrica .titulo {
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.metrica .valor {
+  font-size: 14px;
+}
+
+.pedidos-recentes {
+  padding: 14px;
+}
+
+.pedidos-recentes .titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pedidos-recentes .titulo h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.pedidos {
+  padding-top: 12px;
+}
+
+.pedido {
+  display: flex;
+  padding: 12px 0;
+}
+
+.pedido img {
+  margin-top: 4px;
+}
+
+.pedido .info {
+  flex: 1;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.pedido .info .nome {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pedido .info .data {
+  font-size: 11px;
+}
+
+.pedido .valor {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.produtos {
+  padding: 14px 14px 4px;
+}
+
+.produtos .table th, 
+.produtos .table td {
+  font-size: 14px;
+}
+
+.produtos .titulo {
+  margin-bottom: 20px;
+}
+
+.produtos .titulo h3 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.produtos .status {
+  padding: 4px 6px;
+  color: white;
+  border-radius: 5px;
+  background-color: #CCC;
+  text-align: center;
+  width: 100px;
+  font-size: 12px;
+}
+
+.produtos .status.estoque {
+  background-color: rgb(2, 150, 2);
+}
+
+.produtos .status.fora-estoque {
+  background-color: rgb(202, 0, 0);
+}

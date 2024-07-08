@@ -1,0 +1,13 @@
+.content-container {
+  padding-left: 220px;
+  padding-top: 20px;
+}
+
+.conteudo {
+  padding-left: 220px;
+  padding-top: 20px;
+  width: 100%;
+  padding: 12px 14px;
+  box-shadow: 0px 0px 7px -3px rgb(110 110 110);
+  background-color: white;
+}

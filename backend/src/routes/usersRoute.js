@@ -17,6 +17,8 @@ router.post('/users', (req, res) => userController.post(req, res));
 router.put('/users/:id', (req, res) => userController.update(req, res));
 router.delete('/users/:id', (req, res) => userController.delete(req, res));
 
+router.post('/users/login', (req, res) => userController.login(req, res));
+router.post('/users/register', (req, res) => userController.register(req, res));
 // Suppliers
 router.get('/users/:user_id/suppliers', (req, res) => supplierController.getList(req, res));
 router.get('/users/:user_id/suppliers/:cnpj', (req, res) => supplierController.getOne(req, res));

@@ -1,0 +1,75 @@
+.conteudo-principal {
+  display: flex;
+  width: 100%;
+  padding: 20px 0;
+}
+
+.foto {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.foto-conteudo {
+  background-color: white;
+  border: 1px solid #CCC;
+  border-radius: 10px;
+  height: 200px;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.foto-perfil {
+  position: relative;
+  height: 100px;
+  width: 100px;
+  margin-bottom: 10px;
+}
+
+.icone-perfil {
+  position: absolute;
+  bottom: 0;
+  border: 1px solid #000;
+  border-radius: 100%;
+  padding: 3px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.excluir {
+  left: 10px;
+}
+
+.editar {
+  right: 10px;
+}
+
+.formulario {
+  flex: 2;
+}
+
+.formulario-conteudo {
+  background-color: white;
+  padding: 50px;
+  border: 1px solid #CCC;
+  border-radius: 10px;
+}
+
+.formulario-btns {
+  text-align: right;
+}
+
+.input {
+  border: none;
+  font-size: 15px;
+  background-color: rgba(217, 218, 217);
+  width: 100%;
+  padding: 5px;
+}
+
+.formulario-btns .btn {
+  margin-left: 4px;
+}
