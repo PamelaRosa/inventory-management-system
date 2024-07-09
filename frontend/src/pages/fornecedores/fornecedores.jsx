@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { format, isValid } from 'date-fns';
+import { toast, ToastContainer } from 'react-toastify';
 import Menu from "../../components/menu/menu";
 import Conteudo from "../../components/conteudo/conteudo";
 import Cabecalho from "../../components/cabecalho/cabecalho";
@@ -122,7 +123,7 @@ export default function Fornecedores() {
   const handleSubmitModal = async () => {
     try {
       if (!novoFornecedor.company || !novoFornecedor.email || !novoFornecedor.contact) {
-        alert('Preencha todos os campos obrigatórios.');
+        toast.warn('Por favor, preencha todos os campos obrigatórios.', { autoClose: 5000 });
         return;
       }
 
@@ -131,18 +132,19 @@ export default function Fornecedores() {
       if (fornecedorSelecionado) {
         novoFornecedor.updatedAt = new Date().toISOString();
         await atualizarFornecedor(user.id, fornecedorSelecionado.id, novoFornecedor);
-        console.log('Fornecedor atualizado com sucesso!');
+        toast.success('Fornecedor atualizado com sucesso!', { autoClose: 10000 });
       } else {
         novoFornecedor.createdAt = new Date().toISOString();
         novoFornecedor.updatedAt = new Date().toISOString();
         await adicionarFornecedor(user.id, novoFornecedor);
-        console.log('Novo fornecedor adicionado com sucesso!');
+        toast.success('Novo fornecedor adicionado com sucesso!', { autoClose: 10000 });
       }
 
       const fornecedoresAtualizados = await getFornecedores(user.id);
       setFornecedores(fornecedoresAtualizados);
     } catch (error) {
       console.error('Erro ao salvar fornecedor:', error);
+      toast.error('Não foi possível salvar o fornecedor. Verifique os dados e tente novamente.', { autoClose: 10000 });
     } finally {
       setShowModal(false);
       setFornecedorSelecionado(null);
@@ -176,7 +178,9 @@ export default function Fornecedores() {
       await excluirFornecedor(user.id, fornecedorId);
       const fornecedoresAtualizados = await getFornecedores(user.id);
       setFornecedores(fornecedoresAtualizados);
+      toast.success('Fornecedor excluído com sucesso!', { autoClose: 10000 });
     } catch (error) {
+      toast.error('Erro ao excluir fornecedor', { autoClose: 10000 });
       console.error('Erro ao excluir fornecedor:', error);
     }
   };
@@ -348,6 +352,9 @@ export default function Fornecedores() {
           </Button>
         </Modal.Footer>
       </Modal>
+      {/* Toast Container */}
+      <ToastContainer position="top-center" autoClose={10000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+
     </div>
   );
 }

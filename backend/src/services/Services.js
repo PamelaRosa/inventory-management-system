@@ -88,11 +88,11 @@ class Services {
 
   async deleteRegister(id) {
     try {
-      const deletedCount = await dataSource[this.model].destroy({ where: { id: id } });
-      if (deletedCount === 0) {
+      const result = await dataSource[this.model].destroy({ where: { id: id } });
+      if (result === 0) {
         throw new Error('Registro não encontrado ou não foi deletado.');
       }
-      return deletedCount;
+      return { success: true, deletedCount: result };
     } catch (error) {
       throw new Error(`Erro ao deletar registro: ${error.message}`);
     }

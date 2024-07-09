@@ -7,6 +7,7 @@ import TresPontosIcone from "../../assets/icones/tres-pontos.png";
 import { Button, Modal, Form, Row, Col, Dropdown } from 'react-bootstrap';
 import './produtos.css';
 import { useState, useEffect } from "react";
+import { toast, ToastContainer } from 'react-toastify';
 import { getProdutos, addProduto, updateProduto, deleteProduto } from "../../services/produtoService";
 import { getCategorias } from "../../services/categoriaService";
 
@@ -49,6 +50,14 @@ export default function Produtos() {
   };
 
   const handleSalvar = async () => {
+    const camposObrigatorios = ['name', 'brand', 'cnpj', 'status', 'unit_price','unit_promotional_price','quantity', 'description'];
+    const camposValidos = camposObrigatorios.every(campo => produto[campo]);
+
+    if (!camposValidos) {
+      toast.warn('Por favor, preencha todos os campos obrigatórios.', { autoClose: 5000 });
+      return;
+    }
+
     var selectCategory = document.getElementById('category');
     var selectedIndex = selectCategory.selectedIndex;
     var selectedOption = selectCategory.options[selectedIndex];
@@ -63,19 +72,21 @@ export default function Produtos() {
       unit_promotional_price: document.getElementById('unit_promotional_price').value,
       status: document.getElementById('status').value === 'true',
       category_id: selectedOption.value,
-      cnpj: document.getElementById('cnpj').value.replace(/[^\d]/g, '') // remove any non-numeric characters
+      cnpj: document.getElementById('cnpj').value.replace(/[^\d]/g, '')
     };
 
     try {
       if (produtoSelecionado) {
         await updateProduto(produto);
+        toast.success('Produto atualizado com sucesso!', { autoClose: 10000 });
       } else {
         await addProduto(produto);
+        toast.success('Produto criado com sucesso!', { autoClose: 10000 });
       }
       const produtosData = await getProdutos();
       setProdutos(produtosData);
     } catch (error) {
-      setError(error);
+      toast.error('Não foi possível salvar o produto. Verifique os dados e tente novamente.', { autoClose: 10000 });
     } finally {
       handleCloseModal();
     }
@@ -96,17 +107,15 @@ export default function Produtos() {
       await deleteProduto(produtoId);
       const produtosData = await getProdutos();
       setProdutos(produtosData);
+      toast.success('Produto excluído com sucesso!', { autoClose: 10000 });
     } catch (error) {
-      setError(error);
+      toast.error('Erro ao excluir produto', { autoClose: 10000 });
+      console.error('Erro ao excluir pedido:', error);
     }
   };
 
   if (loading) {
     return <div>Carregando...</div>;
-  }
-
-  if (error) {
-    return <div>Erro ao carregar produtos: {error.message}</div>;
   }
 
   return (
@@ -248,6 +257,9 @@ export default function Produtos() {
           <Button variant="primary" onClick={handleSalvar}>{produtoSelecionado ? 'Salvar Alterações' : 'Salvar'}</Button>
         </Modal.Footer>
       </Modal>
+      {/* Toast Container */}
+      <ToastContainer position="top-center" autoClose={10000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+
     </div>
   );
 }

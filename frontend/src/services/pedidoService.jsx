@@ -52,7 +52,6 @@ async function createPedido(pedido) {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 404) {
-            // Retorna um array vazio se a resposta for "not found"
             return [];
         }
         console.error('Erro ao criar pedido:', error);
@@ -86,9 +85,19 @@ async function updatePedido(pedidoId, pedido) {
     }
 }
 
+async function excluirPedido(userId, pedidoId) {
+    try {
+        await baseURL.delete(`/users/${userId}/orders/${pedidoId}`);
+    } catch (error) {
+        console.error('Erro ao excluir pedido:', error);
+        throw error;
+    }
+}
+
 export {
     getPedidos,
     getItensPedido,
     createPedido,
-    updatePedido
+    updatePedido,
+    excluirPedido
 }

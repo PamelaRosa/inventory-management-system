@@ -1,29 +1,34 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
+import { format } from 'date-fns';
 import { Button, Modal, Form, Row, Col, Dropdown } from 'react-bootstrap';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Menu from "../../components/menu/menu";
 import Conteudo from "../../components/conteudo/conteudo";
 import Cabecalho from "../../components/cabecalho/cabecalho";
 import EditarIcone from "../../assets/icones/editar.png";
 import ExcluirIcone from "../../assets/icones/excluir.png";
 import TresPontosIcone from "../../assets/icones/tres-pontos.png";
-import { getPedidos, createPedido, updatePedido, getItensPedido } from "../../services/pedidoService";
+import { getPedidos, createPedido, updatePedido, getItensPedido, excluirPedido } from "../../services/pedidoService";
 import './pedidos.css';
 
 export default function Pedidos() {
+  const user = JSON.parse(localStorage.getItem('user'));
   const [showModal, setShowModal] = useState(false);
   const [pedidos, setPedidos] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
   const [pedidoSelecionado, setPedidoSelecionado] = useState(null);
   const [novoPedido, setNovoPedido] = useState({
+    user_id: '',
+    cnpj: '',
     cliente: '',
     client_email: '',
+    delivery_date: '',
     status: '',
-    total_amount: 0,
-    order_date: '',
-    delivery_date: ''
+    items: []
   });
-  const [itensPedido, setItensPedido] = useState([{ product_id: '', product: '', quantity: 1 }]);
+  const [itensPedido, setItensPedido] = useState([{ product_id: '', quantity: 1 }]);
+  const [editando, setEditando] = useState(false);
 
   useEffect(() => {
     async function fetchPedidos() {
@@ -31,7 +36,7 @@ export default function Pedidos() {
         const response = await getPedidos();
         setPedidos(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
-        // setError(error);
+        console.error('Erro ao buscar pedidos:', error);
       } finally {
         setLoading(false);
       }
@@ -53,8 +58,10 @@ export default function Pedidos() {
 
     if (pedidoSelecionado) {
       fetchItensPedido(pedidoSelecionado.id);
+      setEditando(true);
     } else {
       setItensPedido([]);
+      setEditando(false);
     }
   }, [pedidoSelecionado]);
 
@@ -62,70 +69,97 @@ export default function Pedidos() {
     setShowModal(false);
     setPedidoSelecionado(null);
     setNovoPedido({
+      user_id: user.id,
+      cnpj: '',
       cliente: '',
       client_email: '',
+      delivery_date: '',
       status: '',
-      total_amount: 0,
-      order_date: '',
-      delivery_date: ''
+      items: []
     });
-    setItensPedido([{ product_id: '', product: '', quantity: 1 }]);
+    setItensPedido([{ product_id: '', quantity: 1 }]);
+    setEditando(false);
   };
 
   const handleSalvar = async () => {
-    const camposObrigatorios = ['cliente', 'client_email', 'status', 'delivery_date'];
+    const camposObrigatorios = ['cliente', 'client_email', 'cnpj', 'status', 'delivery_date'];
     const camposValidos = camposObrigatorios.every(campo => novoPedido[campo]);
 
     if (!camposValidos) {
-      alert('Por favor, preencha todos os campos obrigatórios.');
+      toast.warn('Por favor, preencha todos os campos obrigatórios.', { autoClose: 5000 });
       return;
     }
 
     const itensValidos = itensPedido.every(item => item.product_id && item.quantity);
 
     if (!itensValidos) {
-      alert('Por favor, preencha todos os campos de produtos.');
+      toast.warn('Por favor, preencha todos os campos do item de produto.', { autoClose: 5000 });
       return;
     }
 
     setShowModal(false);
     setPedidoSelecionado(null);
+
     try {
+      const pedidoParaSalvar = {
+        ...novoPedido,
+        delivery_date: format(new Date(novoPedido.delivery_date), "yyyy-MM-dd'T'HH:mm:ss'Z'"), // Manually format the date
+        items: itensPedido
+      };
+
       if (pedidoSelecionado) {
-        await updatePedido(pedidoSelecionado.id, novoPedido, itensPedido);
+        await updatePedido(pedidoSelecionado.id, pedidoParaSalvar);
+        toast.success('Pedido atualizado com sucesso!', { autoClose: 10000 });
       } else {
-        await createPedido(novoPedido, itensPedido);
+        await createPedido(pedidoParaSalvar);
+        toast.success('Pedido criado com sucesso!', { autoClose: 10000 });
       }
 
       const updatedPedidos = await getPedidos();
       setPedidos(Array.isArray(updatedPedidos.data) ? updatedPedidos.data : []);
     } catch (error) {
       console.error('Erro ao salvar o pedido:', error);
+      toast.error('Não foi possível salvar o pedido. Verifique os dados e tente novamente.', { autoClose: 10000 });
     } finally {
       handleCloseModal();
     }
   };
 
   const handleEditar = (pedido) => {
+    const formattedDeliveryDate = pedido.delivery_date ? pedido.delivery_date.split('T')[0] : '';
+
     setPedidoSelecionado(pedido);
     setNovoPedido({
+      user_id: user.id,
+      cnpj: pedido.cnpj,
       cliente: pedido.client,
       client_email: pedido.client_email,
+      delivery_date: formattedDeliveryDate,
       status: pedido.status,
-      total_amount: pedido.total_amount,
-      order_date: pedido.order_date,
-      delivery_date: pedido.delivery_date
+      items: [] 
     });
     setShowModal(true);
   };
 
+
   const handleAdicionar = () => {
     setShowModal(true);
     setPedidoSelecionado(null);
+    setNovoPedido({
+      user_id: user.id,
+      cnpj: '',
+      cliente: '',
+      client_email: '',
+      delivery_date: '',
+      status: '',
+      items: []
+    });
+    setItensPedido([{ product_id: '', quantity: 1 }]);
+    setEditando(false);
   };
 
   const handleAddItem = () => {
-    setItensPedido([...itensPedido, { product_id: '', product: '', quantity: 1 }]);
+    setItensPedido([...itensPedido, { product_id: '', quantity: 1 }]);
   };
 
   const handleRemoveItem = (index) => {
@@ -138,6 +172,19 @@ export default function Pedidos() {
     const newItens = [...itensPedido];
     newItens[index][field] = value;
     setItensPedido(newItens);
+  };
+
+  const handleExcluirPedido = async (pedidoId) => {
+    try {
+      const user = JSON.parse(localStorage.getItem('user'));
+      await excluirPedido(user.id, pedidoId);
+      const pedidosAtualizados = await getPedidos(user.id);
+      setPedidos(pedidosAtualizados);
+      toast.success('Pedido excluído com sucesso!', { autoClose: 10000 });
+    } catch (error) {
+      toast.error('Erro ao excluir pedido', { autoClose: 10000 });
+      console.error('Erro ao excluir pedido:', error);
+    }
   };
 
   if (loading) {
@@ -172,46 +219,44 @@ export default function Pedidos() {
               <tbody>
                 {pedidos.length === 0 ? (
                   <tr>
-                  <td className="text-center" colSpan="8">Nenhum registro encontrado.</td>
-                </tr>
-                )
-                  : (
-                    pedidos.map((pedido) => (
-                      <tr key={pedido.id}>
-                        <th scope="row">{pedido.id}</th>
-                        <td>{new Date(pedido.order_date).toLocaleDateString()}</td>
-                        <td>{pedido.client}</td>
-                        <td>{pedido.client_email}</td>
-                        <td>
-                          <div className={`status ${pedido.status === "pending" ? "pendente" : pedido.status === "shipped" ? "enviado" : "nao-enviado"}`}>
-                            {pedido.status === "pending" ? "Pendente" : pedido.status === "shipped" ? "Enviado" : "Cancelado"}
-                          </div>
-                        </td>
-                        <td>
-                          <Dropdown>
-                            <Dropdown.Toggle as="button" className="btn no-caret">
-                              <img src={TresPontosIcone} width="18" height="20" alt="Opções" />
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                              <Dropdown.Item onClick={() => handleEditar(pedido)}>
-                                <img src={EditarIcone} alt="Editar" /> Editar
-                              </Dropdown.Item>
-                              <Dropdown.Item onClick={() => console.log("Excluir pedido", pedido.id)}>
-                                <img src={ExcluirIcone} alt="Excluir" /> Excluir
-                              </Dropdown.Item>
-                            </Dropdown.Menu>
-                          </Dropdown>
-                        </td>
-                      </tr>
-                    ))
-                  )}
-
+                    <td className="text-center" colSpan="6">Nenhum registro encontrado.</td>
+                  </tr>
+                ) : (
+                  pedidos.map((pedido) => (
+                    <tr key={pedido.id}>
+                      <th scope="row">{pedido.id}</th>
+                      <td>{new Date(pedido.order_date).toLocaleDateString()}</td>
+                      <td>{pedido.client}</td>
+                      <td>{pedido.client_email}</td>
+                      <td>
+                        <div className={`status ${pedido.status === "pending" ? "pendente" : pedido.status === "shipped" ? "enviado" : "nao-enviado"}`}>
+                          {pedido.status === "pending" ? "Pendente" : pedido.status === "shipped" ? "Enviado" : "Cancelado"}
+                        </div>
+                      </td>
+                      <td>
+                        <Dropdown>
+                          <Dropdown.Toggle as="button" className="btn no-caret">
+                            <img src={TresPontosIcone} width="18" height="20" alt="Opções" />
+                          </Dropdown.Toggle>
+                          <Dropdown.Menu>
+                            <Dropdown.Item onClick={() => handleEditar(pedido)}>
+                              <img src={EditarIcone} alt="Editar" /> Editar
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => handleExcluirPedido(pedido.id)}>
+                              <img src={ExcluirIcone} alt="Excluir" /> Excluir
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
-
             </table>
           </div>
         </div>
       </Conteudo>
+
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
           <Modal.Title>{pedidoSelecionado ? "Editar Pedido" : "Adicionar Pedido"}</Modal.Title>
@@ -234,6 +279,15 @@ export default function Pedidos() {
                 placeholder="Email do cliente"
                 value={novoPedido.client_email}
                 onChange={(e) => setNovoPedido({ ...novoPedido, client_email: e.target.value })}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Fornecedor CNPJ</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="CNPJ do fornecedor"
+                value={novoPedido.cnpj}
+                onChange={(e) => setNovoPedido({ ...novoPedido, cnpj: e.target.value })}
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -263,12 +317,13 @@ export default function Pedidos() {
               <Row key={index} className="mb-3">
                 <Col>
                   <Form.Group>
-                    <Form.Label>Produto</Form.Label>
+                    <Form.Label>ID do Produto</Form.Label>
                     <Form.Control
                       type="text"
                       placeholder="ID do produto"
                       value={item.product_id}
                       onChange={(e) => handleItemChange(index, 'product_id', e.target.value)}
+                      disabled={editando} 
                     />
                   </Form.Group>
                 </Col>
@@ -280,15 +335,16 @@ export default function Pedidos() {
                       placeholder="Quantidade"
                       value={item.quantity}
                       onChange={(e) => handleItemChange(index, 'quantity', e.target.value)}
+                      disabled={editando} 
                     />
                   </Form.Group>
                 </Col>
                 <Col xs="auto" className="d-flex align-items-end">
-                  <Button variant="danger" onClick={() => handleRemoveItem(index)}>Remover</Button>
+                  <Button variant="danger" onClick={() => handleRemoveItem(index)} hidden={editando}>Remover</Button>
                 </Col>
               </Row>
             ))}
-            <Button variant="primary" onClick={handleAddItem}>Adicionar Item</Button>
+            <Button variant="primary" onClick={handleAddItem} hidden={editando}>Adicionar Item</Button>
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -296,6 +352,10 @@ export default function Pedidos() {
           <Button variant="primary" onClick={handleSalvar}>Salvar</Button>
         </Modal.Footer>
       </Modal>
+
+      {/* Toast Container */}
+      <ToastContainer position="top-center" autoClose={10000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
+
     </div>
   );
 }
