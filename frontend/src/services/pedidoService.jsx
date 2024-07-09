@@ -30,7 +30,7 @@ async function getItensPedido(id) {
     }
 }
 
-async function createPedido(pedido, itensPedido) {
+async function createPedido(pedido) {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user || !user.id) {
         throw new Error('Usuário não está logado.');
@@ -43,7 +43,7 @@ async function createPedido(pedido, itensPedido) {
             client_email: pedido.client_email,
             delivery_date: pedido.delivery_date,
             status: pedido.status,
-            items: itensPedido.map(item => ({
+            items: pedido.items.map(item => ({
                 product_id: item.product_id,
                 quantity: item.quantity
             }))
@@ -60,7 +60,7 @@ async function createPedido(pedido, itensPedido) {
     }
 }
 
-async function updatePedido(pedidoId, pedido, itensPedido) {
+async function updatePedido(pedidoId, pedido) {
     const user = JSON.parse(localStorage.getItem('user'));
     if (!user || !user.id) {
         throw new Error('Usuário não está logado.');
@@ -73,7 +73,7 @@ async function updatePedido(pedidoId, pedido, itensPedido) {
             client_email: pedido.client_email,
             delivery_date: pedido.delivery_date,
             status: pedido.status,
-            items: itensPedido.map(item => ({
+            items: pedido.items.map(item => ({
                 product_id: item.product_id,
                 quantity: item.quantity
             }))
